@@ -33,6 +33,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import static com.codekidlabs.storagechooser.StorageChooser.Theme.OVERVIEW_BG_INDEX;
 import static com.codekidlabs.storagechooser.StorageChooser.Theme.OVERVIEW_HEADER_INDEX;
@@ -124,6 +125,7 @@ public class ChooserDialogFragment extends android.app.DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final String dirPath = evaluatePath(i);
+
 
                 if (new File(dirPath).canRead()) {
                     // if allowCustomPath is called then directory chooser will be the default secondary dialog
@@ -243,10 +245,25 @@ public class ChooserDialogFragment extends android.app.DialogFragment {
     private void populateList() {
         storagesList = new ArrayList<>();
 
-        File storageDir = new File("/storage");
         String internalStoragePath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
-        File[] volumeList = storageDir.listFiles();
+        var volumeList = new ArrayList<File>();
+        var externalFilesDirs = ContextCompat.getExternalFilesDirs(getContext(), null);
+
+        if (externalFilesDirs.length > 1) {
+            for (int i = 1; i < externalFilesDirs.length; i++) {
+                if (externalFilesDirs[i] != null) {
+                    String path = externalFilesDirs[i].getAbsolutePath();
+                    int index = path.indexOf("/Android/data/");
+                    if (index > 0) {
+                        var file = new File(path.substring(0, index));
+                        if (file.canRead()){
+                            volumeList.add(file);
+                        }
+                    }
+                }
+            }
+        }
 
         Storages storages = new Storages();
 

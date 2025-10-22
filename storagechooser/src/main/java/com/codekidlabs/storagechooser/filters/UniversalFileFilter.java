@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by codekid on 21/07/17.
@@ -49,6 +50,10 @@ public class UniversalFileFilter implements FileFilter {
         }
 
         if (f.isDirectory()) {
+            if (f.listFiles() == null || f.listFiles().length == 0){
+                return false;
+            }
+
             return findInDirectory(f);
         }
         return isFileExtension(f);
@@ -94,7 +99,11 @@ public class UniversalFileFilter implements FileFilter {
             return false;
         } else {
             final ArrayList<File> sub = new ArrayList<File>();
-            int indexInList = dir.listFiles(new FileFilter() {
+            if (dir == null || dir.listFiles() == null){
+                return false;
+            }
+
+            int indexInList = Objects.requireNonNull(dir.listFiles(new FileFilter() {
 
                 @Override
                 public boolean accept(File file) {
@@ -109,7 +118,7 @@ public class UniversalFileFilter implements FileFilter {
                     } else
                         return false;
                 }
-            }).length;
+            })).length;
 
             if (indexInList > 0) {
                 Log.i(TAG, "findInDirectory => " + dir.getName() + " return true for => " + indexInList);
@@ -131,7 +140,7 @@ public class UniversalFileFilter implements FileFilter {
      */
     public enum ArchiveFormat {
         ZIP("zip"),
-        RAR("rar");
+        IPA("IPA");
 
         private String filesuffix;
 
