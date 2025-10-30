@@ -24,6 +24,7 @@ android {
     }
 
     android.defaultConfig.vectorDrawables.useSupportLibrary = true
+    buildToolsVersion versions.build_tools_version
 }
 
 dependencies {
