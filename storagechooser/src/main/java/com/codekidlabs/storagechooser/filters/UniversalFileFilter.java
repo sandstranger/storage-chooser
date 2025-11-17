@@ -79,19 +79,20 @@ public class UniversalFileFilter implements FileFilter {
     }
 
     private Object getFormatExtention(String ext) {
+        var extUppercase = ext.toUpperCase();
         switch (fileType) {
             case VIDEO:
-                return VideoFormat.valueOf(ext.toUpperCase());
+                return VideoFormat.valueOf(extUppercase);
             case AUDIO:
-                return AudioFormat.valueOf(ext.toUpperCase());
+                return AudioFormat.valueOf(extUppercase);
             case IMAGES:
-                return ImageFormat.valueOf(ext.toUpperCase());
+                return ImageFormat.valueOf(extUppercase);
             case DOCS:
-                return DocsFormat.valueOf(ext.toUpperCase());
+                return DocsFormat.valueOf(extUppercase);
             case CUE:
-                return CueFormat.valueOf(ext.toLowerCase());
+                return CueFormat.valueOf(extUppercase);
             case ARCHIVE:
-                return ArchiveFormat.valueOf(ext.toUpperCase());
+                return ArchiveFormat.valueOf(extUppercase);
             default:
                 return null;
         }
