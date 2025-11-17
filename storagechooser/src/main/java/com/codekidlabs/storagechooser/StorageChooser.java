@@ -158,7 +158,7 @@ public class StorageChooser {
     }
 
     public enum FileType {
-        VIDEO, AUDIO, DOCS, IMAGES, ARCHIVE
+        VIDEO, AUDIO, DOCS, IMAGES, ARCHIVE, CUE
     }
 
     public interface OnSelectListener {

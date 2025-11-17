@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -87,6 +88,8 @@ public class UniversalFileFilter implements FileFilter {
                 return ImageFormat.valueOf(ext.toUpperCase());
             case DOCS:
                 return DocsFormat.valueOf(ext.toUpperCase());
+            case CUE:
+                return CueFormat.valueOf(ext.toLowerCase());
             case ARCHIVE:
                 return ArchiveFormat.valueOf(ext.toUpperCase());
             default:
@@ -216,6 +219,16 @@ public class UniversalFileFilter implements FileFilter {
             this.filesuffix = filesuffix;
         }
 
+    }
+
+    public enum CueFormat {
+        CUE("cue");
+
+        private String filesuffix;
+
+        CueFormat(String filesuffix) {
+            this.filesuffix = filesuffix;
+        }
     }
 }
 
