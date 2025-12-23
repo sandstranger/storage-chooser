@@ -67,6 +67,13 @@ public class StorageChooser {
         init();
     }
 
+    public void close(){
+        if (dialog!=null){
+            dialog.cancel();
+            dialog = null;
+        }
+    }
+
     /**
      * init() creates the storage chooser dialog
      */
