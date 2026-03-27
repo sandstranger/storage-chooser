@@ -1,7 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion versions.target_sdk
+    compileSdk {
+        version = release(versions.target_sdk) {
+            minorApiLevel = 0
+        }
+    }
     namespace 'com.codekidlabs.storagechooser'
 
     defaultConfig {
