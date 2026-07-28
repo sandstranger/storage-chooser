@@ -219,12 +219,12 @@ public class ChooserDialogFragment extends android.app.DialogFragment {
      * @param i position in list
      * @return String with the required path for developers
      */
+    
     private String evaluatePath(int i) {
-        if (i == 0) {
-            return Environment.getExternalStorageDirectory().getAbsolutePath();
-        } else {
-            return "/storage/" + storagesList.get(i).getStorageTitle();
-        }
+      if (i == 0) {
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+    return storagesList.get(i).getStoragePath();
     }
 
     /**
@@ -292,6 +292,22 @@ public class ChooserDialogFragment extends android.app.DialogFragment {
             }
         }
 
+        Context ctx = getContext();
+        if (ctx != null) {
+            File appSandbox = ctx.getExternalFilesDir(null);
+            if (appSandbox == null) {
+                appSandbox = ctx.getFilesDir();
+            }
+            if (appSandbox != null) {
+                Storages sandboxStorage = new Storages();
+                sandboxStorage.setStorageTitle("App Sandbox");
+                String sandboxPath = appSandbox.getAbsolutePath();
+                sandboxStorage.setStoragePath(sandboxPath);
+                sandboxStorage.setMemoryTotalSize(memoryUtil.formatSize(memoryUtil.getTotalMemorySize(sandboxPath)));
+                sandboxStorage.setMemoryAvailableSize(memoryUtil.formatSize(memoryUtil.getAvailableMemorySize(sandboxPath)));
+                storagesList.add(sandboxStorage);
+            }
+        }
     }
 
     // Convinience methods
